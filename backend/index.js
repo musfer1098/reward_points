@@ -10,7 +10,14 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: process.env.CLIENT_URL || '*', credentials: true }))
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(',').map((o) => o.trim())
+  : true // allow all in dev
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}))
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
