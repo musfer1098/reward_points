@@ -1,5 +1,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body {
+  height: 100%;
+  scroll-behavior: auto;
+}
+
 :root {
   --red:        #c0152a;
   --red-dark:   #8b0d1c;
