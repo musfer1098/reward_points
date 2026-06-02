@@ -10,7 +10,7 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
+app.use(cors({ origin: process.env.CLIENT_URL || '*', credentials: true }))
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
@@ -19,15 +19,20 @@ app.use('/api/leaderboard', leaderboardRoutes)
 
 app.get('/api/health', (_, res) => res.json({ status: 'ok' }))
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log('MongoDB connected')
-    app.listen(process.env.PORT || 5000, () =>
-      console.log(`Server running on port ${process.env.PORT || 5000}`)
-    )
-  })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message)
-    process.exit(1)
-  })
+// Connect to MongoDB once (reused across serverless invocations)
+let isConnected = false
+async function connectDB() {
+  if (isConnected) return
+  await mongoose.connect(process.env.MONGO_URI)
+  isConnected = true
+}
+
+connectDB().catch(console.error)
+
+// Local dev server
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+}
+
+export default app

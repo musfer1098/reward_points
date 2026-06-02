@@ -1,3 +1,4 @@
+import API_BASE from '../config.js'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import IsaarHeader from '../components/IsaarHeader'
@@ -14,7 +15,7 @@ export default function Dashboard() {
     const token = localStorage.getItem('token')
     if (!token) { navigate('/login'); return }
 
-    fetch('/api/user/me', { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${API_BASE}/api/user/me`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => res.json())
       .then((data) => {
         if (data.message) {

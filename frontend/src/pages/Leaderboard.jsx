@@ -1,3 +1,4 @@
+import API_BASE from '../config.js'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import IsaarHeader from '../components/IsaarHeader'
@@ -13,7 +14,7 @@ export default function Leaderboard() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    fetch(`${API_BASE}/api/leaderboard`)
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data)) setLeaders(data)

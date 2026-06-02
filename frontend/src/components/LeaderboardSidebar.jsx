@@ -1,3 +1,4 @@
+import API_BASE from '../config.js'
 import { useEffect, useState } from 'react'
 import Countdown from './Countdown'
 
@@ -8,7 +9,7 @@ export default function LeaderboardSidebar() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    fetch(`${API_BASE}/api/leaderboard`)
       .then((r) => r.json())
       .then((data) => { if (Array.isArray(data)) setLeaders(data) })
       .catch(() => {})
