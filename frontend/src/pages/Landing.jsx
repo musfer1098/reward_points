@@ -1,6 +1,10 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import IsaarHeader from '../components/IsaarHeader'
 import PageLayout from '../components/PageLayout'
+import { isCampaignEnded } from '../utils/campaign'
+
+const MEDALS = ['🥇', '🥈', '🥉']
 
 const features = [
   {
@@ -20,8 +24,75 @@ const features = [
   },
 ]
 
+function WinnersView() {
+  const [leaders, setLeaders] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/leaderboard')
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data)) setLeaders(data) })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
+  return (
+    <div className="landing-card">
+      <IsaarHeader />
+      <div className="divider" />
+
+      <div className="campaign-ended-banner">
+        <p className="ended-title">🎉 Campaign Has Ended!</p>
+        <p className="ended-sub">Thank you to everyone who participated in the Isaar Registration Campaign.</p>
+      </div>
+
+      <div className="winners-section">
+        <h2 className="winners-heading">🏆 Final Results</h2>
+
+        {loading && (
+          <div className="loading-pulse">
+            <div className="loading-drop">🩸</div>
+            <p>Loading results...</p>
+          </div>
+        )}
+
+        {!loading && leaders.length === 0 && (
+          <p className="lb-sidebar-empty">No results available.</p>
+        )}
+
+        {!loading && leaders.length > 0 && (
+          <ol className="winners-list">
+            {leaders.map((user, i) => (
+              <li key={i} className={`winner-row ${i === 0 ? 'winner-first' : ''} ${i < 3 ? `winner-top3` : ''}`}>
+                <span className="winner-rank">
+                  {i < 3 ? MEDALS[i] : <span className="lb-s-num">{i + 1}</span>}
+                </span>
+                <div className="winner-info">
+                  <span className="winner-name">{user.name}</span>
+                  {i === 0 && <span className="winner-prize-badge">🎁 Gift Winner</span>}
+                  {i > 0 && <span className="winner-cert-badge">🏆 Certificate</span>}
+                </div>
+                <span className="winner-pts">{user.points}<span className="lb-s-pts-label"> pts</span></span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function Landing() {
   const navigate = useNavigate()
+  const ended = isCampaignEnded()
+
+  if (ended) {
+    return (
+      <PageLayout hideSidebar>
+        <WinnersView />
+      </PageLayout>
+    )
+  }
 
   return (
     <PageLayout>

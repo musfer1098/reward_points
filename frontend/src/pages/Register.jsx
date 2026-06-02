@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import IsaarHeader from '../components/IsaarHeader'
 import PageLayout from '../components/PageLayout'
+import { isCampaignEnded } from '../utils/campaign'
 
 const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 
 export default function Register() {
   const navigate = useNavigate()
+  const ended = isCampaignEnded()
   const [form, setForm] = useState({ name: '', phone: '', age: '', bloodGroup: '', referralCode: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -55,6 +57,24 @@ export default function Register() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (ended) {
+    return (
+      <PageLayout>
+        <div className="form-card">
+          <IsaarHeader />
+          <div className="divider" />
+          <div className="campaign-ended-banner">
+            <p className="ended-title">🔒 Registration Closed</p>
+            <p className="ended-sub">The Isaar Registration Campaign ended on June 10, 2026. Thank you for your interest!</p>
+          </div>
+          <p className="form-footer">
+            <Link to="/">← View the winners</Link>
+          </p>
+        </div>
+      </PageLayout>
+    )
   }
 
   return (

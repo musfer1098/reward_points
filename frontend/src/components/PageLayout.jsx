@@ -1,11 +1,11 @@
 import LeaderboardSidebar from './LeaderboardSidebar'
 
-export default function PageLayout({ children }) {
+export default function PageLayout({ children, hideSidebar = false }) {
   return (
     <div className="page-bg">
-      <div className="page-layout">
+      <div className={`page-layout ${hideSidebar ? 'page-layout-centered' : ''}`}>
         <main className="page-main">{children}</main>
-        <LeaderboardSidebar />
+        {!hideSidebar && <LeaderboardSidebar />}
       </div>
     </div>
   )
