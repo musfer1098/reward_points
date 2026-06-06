@@ -69,7 +69,7 @@ export default function Register() {
           <div className="divider" />
           <div className="campaign-ended-banner">
             <p className="ended-title">🔒 Registration Closed</p>
-            <p className="ended-sub">The Isaar Registration Campaign ended on June 10, 2026. Thank you for your interest!</p>
+            <p className="ended-sub">The Isaar Registration Campaign ended on June 14, 2026. Thank you for your interest!</p>
           </div>
           <p className="form-footer">
             <Link to="/">← View the winners</Link>

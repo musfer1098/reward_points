@@ -5,7 +5,7 @@ import IsaarHeader from '../components/IsaarHeader'
 import Stars from '../components/Stars'
 
 const MEDALS = ['🥇', '🥈', '🥉']
-const PRIZE_DATE = 'June 10, 2026'
+const PRIZE_DATE = 'June 14, 2026'
 
 export default function Leaderboard() {
   const navigate = useNavigate()

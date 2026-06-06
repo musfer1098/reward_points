@@ -22,7 +22,7 @@ export default function LeaderboardSidebar() {
 
       <div className="lb-sidebar-announce">
         <p className="lb-announce-date"><span className="lb-announce-label">🏆 Winner Announced</span></p>
-        <p className="lb-announce-highlight">June 10, 2026</p>
+        <p className="lb-announce-highlight">June 14, 2026</p>
         <div className="lb-prizes">
           <span className="prize-tag prize-gold">🎁 1st — Gift</span>
           <span className="prize-tag prize-silver">🏆 Top 10 — Certificate</span>
