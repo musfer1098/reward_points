@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   bloodGroup:     { type: String, required: true, trim: true },
   points:         { type: Number, default: 10 },
   referralCode:   { type: String, unique: true },
+  location:         { type: String, default: '' },
   usedReferralCode: { type: String, default: '' },
 }, { timestamps: true })
 

@@ -25,7 +25,7 @@ async function uniqueReferralCode() {
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
-    const { name, phone, age, bloodGroup, referralCode } = req.body
+    const { name, phone, age, bloodGroup, location, referralCode } = req.body
 
     if (!name?.trim() || !phone?.trim()) {
       return res.status(400).json({ message: 'Name and phone are required' })
@@ -59,6 +59,7 @@ router.post('/register', async (req, res) => {
       bloodGroup: bloodGroup.trim(),
       points: 10,
       referralCode: newCode,
+      location: location?.trim() || '',
       usedReferralCode: referrer ? referralCode.trim().toUpperCase() : '',
     })
 

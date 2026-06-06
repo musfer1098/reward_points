@@ -6,11 +6,12 @@ import PageLayout from '../components/PageLayout'
 import { isCampaignEnded } from '../utils/campaign'
 
 const BLOOD_GROUPS = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
+const LOCATIONS = ['Sialkot', 'Daska', 'Sambrial', 'Others']
 
 export default function Register() {
   const navigate = useNavigate()
   const ended = isCampaignEnded()
-  const [form, setForm] = useState({ name: '', phone: '', age: '', bloodGroup: '', referralCode: '' })
+  const [form, setForm] = useState({ name: '', phone: '', age: '', bloodGroup: '', location: '', referralCode: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -120,6 +121,17 @@ export default function Register() {
                 ))}
               </select>
             </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="location">Location <span className="optional">(optional)</span></label>
+            <select id="location" name="location" value={form.location} onChange={handleChange}
+              className={!form.location ? 'select-placeholder' : ''}>
+              <option value="">Select your city</option>
+              {LOCATIONS.map((loc) => (
+                <option key={loc} value={loc}>{loc}</option>
+              ))}
+            </select>
           </div>
 
           <div className="field">
