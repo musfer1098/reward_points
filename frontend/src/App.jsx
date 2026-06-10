@@ -3,6 +3,7 @@ import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import AdminPanel from './pages/AdminPanel'
 import ScrollToTop from './components/ScrollToTop'
 
 function ProtectedRoute({ children }) {
@@ -25,6 +26,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+<Route path="/admin" element={<AdminPanel />} />
 <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
